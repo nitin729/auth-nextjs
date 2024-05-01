@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
         $gt: Date.now(),
       },
     });
-
     if (!user) {
       return NextResponse.json(
         { error: "Token did not match" },
@@ -31,7 +30,7 @@ export async function POST(request: NextRequest) {
     user.verifyTokenExpiry = undefined;
 
     await user.save();
-
+    console.log(user);
     return NextResponse.json(
       {
         message: "User verified successfully",

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -11,13 +11,14 @@ function Login() {
   });
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const emailRef = useRef();
+  const passwordRef = useRef();
   const router = useRouter();
 
   const onLogin = async () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/login", user);
-      console.log("res data", response);
       if (response && response.data) {
         router.push("/me");
         toast.success("Logged In successfully");
@@ -29,7 +30,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (user.email.length > 0 && user.password.length > 0) {
+    if (emailRef?.current && passwordRef?.current) {
       setBtnDisabled(false);
     } else {
       setBtnDisabled(true);
@@ -47,6 +48,7 @@ function Login() {
             <input
               className="p-2 rounded text-black"
               placeholder="Email"
+              ref={emailRef}
               type="email"
               value={user.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
@@ -57,6 +59,7 @@ function Login() {
             <input
               className="p-2 rounded text-black"
               placeholder="Password"
+              ref={passwordRef}
               type="password"
               value={user.password}
               onChange={(e) => setUser({ ...user, password: e.target.value })}

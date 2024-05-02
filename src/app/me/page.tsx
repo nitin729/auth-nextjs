@@ -11,7 +11,6 @@ function Me() {
     try {
       setLoading(true);
       const response = await axios.get("/api/users/me");
-      console.log(response);
       if (response.data.userDetails) {
         setData(response.data.userDetails);
       }

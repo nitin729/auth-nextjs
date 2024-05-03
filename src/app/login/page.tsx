@@ -11,6 +11,7 @@ function Login() {
   });
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
   const router = useRouter();
@@ -22,9 +23,12 @@ function Login() {
       if (response && response.data) {
         router.push("/me");
         toast.success("Logged In successfully");
+        setError(false);
       }
     } catch (error: any) {
       console.log("Login Failed");
+      setLoading(false);
+      setError(true);
       toast.error("Login Failed");
     }
   };
@@ -43,6 +47,8 @@ function Login() {
         <div className="p-4 border-white rounded flex flex-col items-center justify-center">
           <h2>Log in</h2>
           {loading && <h2>{loading ? "Processing" : "Success"}</h2>}
+
+          {error && <h2>Login Failed !!!</h2>}
           <div className="mb-3 flex flex-col w-full">
             <label htmlFor="email">Email :</label>
             <input
@@ -65,6 +71,10 @@ function Login() {
               onChange={(e) => setUser({ ...user, password: e.target.value })}
             />
           </div>
+          <div className="mb-3 flex flex-col w-full ">
+            <a href="/reset">Forgot Password ?</a>
+          </div>
+
           <div className="mb-3 flex flex-col w-full ">
             <button
               className="rounded bg-white text-black p-2"

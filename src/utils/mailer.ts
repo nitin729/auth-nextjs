@@ -36,10 +36,10 @@ const sendMail = async ({ email, emailType, userId }: any) => {
 <br>
 ${process.env.DOMAIN}/verifyemail?token=${hashedToken}
 </p>`;
-    const htmlForResetMail = `<p>Click <a href="${process.env.DOMAIN}/resetpassword?token=${hashedToken}">Here</a>
+    const htmlForResetMail = `<p>Click <a href="${process.env.DOMAIN}/forgotpassword?token=${hashedToken}">Here</a>
         to reset your password or copy the below link in your browser.
 <br>
-${process.env.DOMAIN}/resetpassword?token=${hashedToken}
+${process.env.DOMAIN}/forgotpassword?token=${hashedToken}
 </p>`;
 
     const mailOptions = {
